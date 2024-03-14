@@ -1,14 +1,14 @@
-package main
+package commands
 
 import "fmt"
 
-func commandHelp() error {
+func CommandHelp() error {
 	fmt.Println("")
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	fmt.Println("")
-	for _, value := range cliCommandBuilder() {
-		fmt.Printf("%v: %v\n", value.name, value.description)
+	for _, value := range CliCommandBuilder() {
+		fmt.Printf("%v: %v\n", value.Name, value.Description)
 	}
 	fmt.Println("")
 	return nil
