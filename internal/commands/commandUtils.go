@@ -3,16 +3,12 @@ package commands
 import (
 	"errors"
 	"strings"
+
+	"github.com/Daniel-Burbridge-Developer/pokedexcli/models"
 )
 
-type CliCommand struct {
-	Name        string
-	Description string
-	Callback    func() error
-}
-
-func CliCommandBuilder() map[string]CliCommand {
-	return map[string]CliCommand{
+func CliCommandBuilder() map[string]models.CliCommand {
+	return map[string]models.CliCommand{
 		"help": {
 			Name:        "help",
 			Description: "Displays a help message",
@@ -37,13 +33,13 @@ func CliCommandBuilder() map[string]CliCommand {
 
 }
 
-func CliCommandDistributer(command string) (CliCommand, error) {
+func CliCommandDistributer(command string) (models.CliCommand, error) {
 	commands := CliCommandBuilder()
 	value, exists := commands[command]
 	if exists {
 		return value, nil
 	} else {
-		return CliCommand{Name: "", Description: "", Callback: nil}, errors.New("command not found")
+		return models.CliCommand{Name: "", Description: "", Callback: nil}, errors.New("command not found")
 	}
 }
 
