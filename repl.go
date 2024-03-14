@@ -1,6 +1,6 @@
 package main
-
 import (
+	"github.com/Daniel-Burbridge-Developer/pokedexcli/commands
 	"bufio"
 	"fmt"
 	"os"
