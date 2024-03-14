@@ -23,6 +23,16 @@ func cliCommandBuilder() map[string]cliCommand {
 			description: "Exit the Pokedex",
 			callback:    commandExit,
 		},
+		"map": {
+			name:        "map",
+			description: "Scrolls through pokemon locations 20 at a time",
+			callback:    commandMap,
+		},
+		"mapb": {
+			name:        "mapB",
+			description: "Scrolls backwards through pokemon locations 20 at a time or displays an error if no previous locations",
+			callback:    commandMapB,
+		},
 	}
 
 }
