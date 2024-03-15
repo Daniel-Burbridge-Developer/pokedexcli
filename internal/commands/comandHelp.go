@@ -1,8 +1,12 @@
 package commands
 
-import "fmt"
+import (
+	"fmt"
 
-func CommandHelp() error {
+	"github.com/Daniel-Burbridge-Developer/pokedexcli/models"
+)
+
+func CommandHelp(config models.Config) error {
 	fmt.Println("")
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")

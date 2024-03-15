@@ -1,8 +1,12 @@
 package commands
 
-import "os"
+import (
+	"os"
 
-func CommandExit() error {
+	"github.com/Daniel-Burbridge-Developer/pokedexcli/models"
+)
+
+func CommandExit(config models.Config) error {
 	os.Exit(0)
 	return nil
 }
