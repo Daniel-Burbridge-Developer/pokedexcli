@@ -6,7 +6,7 @@ import (
 	"github.com/Daniel-Burbridge-Developer/pokedexcli/models"
 )
 
-func CommandExit(config models.Config) error {
+func CommandExit(config models.Config) (models.Config, error) {
 	os.Exit(0)
-	return nil
+	return config, nil
 }

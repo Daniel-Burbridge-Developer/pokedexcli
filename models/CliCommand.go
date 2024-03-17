@@ -3,5 +3,5 @@ package models
 type CliCommand struct {
 	Name        string
 	Description string
-	Callback    func(config Config) error
+	Callback    func(config Config) (Config, error)
 }

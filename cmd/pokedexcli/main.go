@@ -1,12 +1,12 @@
 package main
 
-import "github.com/Daniel-Burbridge-Developer/pokedexcli/internal/pokeapi"
+// import "github.com/Daniel-Burbridge-Developer/pokedexcli/internal/pokeapi"
 
-// func main() {
-// 	startRepl()
-// }
+func main() {
+	startRepl()
+}
 
 // MAIN TESTER
-func main() {
-	pokeapi.RequestData()
-}
+// func main() {
+// 	pokeapi.RequestData()
+// }

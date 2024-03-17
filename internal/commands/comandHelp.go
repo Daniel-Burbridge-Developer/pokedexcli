@@ -6,7 +6,7 @@ import (
 	"github.com/Daniel-Burbridge-Developer/pokedexcli/models"
 )
 
-func CommandHelp(config models.Config) error {
+func CommandHelp(config models.Config) (models.Config, error) {
 	fmt.Println("")
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
@@ -15,5 +15,5 @@ func CommandHelp(config models.Config) error {
 		fmt.Printf("%v: %v\n", value.Name, value.Description)
 	}
 	fmt.Println("")
-	return nil
+	return config, nil
 }
