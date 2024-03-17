@@ -12,7 +12,7 @@ import (
 func CommandMap(config models.Config) error {
 	//SCRAP THIS - JUST FOR QUICK TEST - GOING TO BED
 	// IS WORKING until hitting hard-coded stuff. But want to redo anyway means other stuff is working
-	res, err := http.Get(config.Next)
+	res, err := http.Get(fmt.Sprint(config.Next))
 	if err != nil {
 		log.Fatal(err)
 	}

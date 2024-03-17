@@ -1,6 +1,6 @@
 package models
 
 type Config struct {
-	Next     string
-	Previous string
+	Next     any `json:"next"`
+	Previous any `json:"previous"`
 }
