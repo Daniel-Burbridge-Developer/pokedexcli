@@ -1,6 +1,8 @@
 package pokecache
 
-import "time"
+import (
+	"time"
+)
 
 type cacheEntry struct {
 	createdAt time.Time

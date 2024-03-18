@@ -1,25 +1,21 @@
 package pokecache
 
 import (
+	"sync"
 	"time"
 )
 
 type Cache struct {
 	CacheEntries map[string]cacheEntry
+	mu           sync.RWMutex
 }
 
-func NewCache(d int) {
-	c := Cache{}
-
-	ticker := time.NewTicker(time.Duration(d))
-
-	// PROBABLY NEEDS TO BE IN A GO ROUTINE OR SOMETHING?
-	for {
-		<-ticker.C
-		ticker.Reset(time.Duration(d))
-		c.ReapLoop()
+func NewCache(d int) Cache {
+	c := Cache{
+		CacheEntries: make(map[string]cacheEntry),
 	}
-
+	c.reapLoop(d)
+	return c
 }
 
 func (c *Cache) Add(key string, val []byte) {
@@ -38,6 +34,24 @@ func (c *Cache) Get(key string) ([]byte, bool) {
 	return entry.val, true
 }
 
-func (c *Cache) ReapLoop() {
-	// DELETE ALL THE OLD THINGS!
+func (c *Cache) reapLoop(d int) {
+	ticker := time.NewTicker(time.Duration(d) * time.Second)
+	defer ticker.Stop()
+
+	for range ticker.C {
+		//log.Println("I'm reaping the things", t)
+
+		c.mu.Lock()
+		keysToDelete := []string{}
+		for key := range c.CacheEntries {
+			if time.Now().After(c.CacheEntries[key].createdAt.Add(time.Duration(d))) {
+				keysToDelete = append(keysToDelete, key)
+			}
+		}
+
+		for _, key := range keysToDelete {
+			delete(c.CacheEntries, key)
+		}
+		c.mu.Unlock()
+	}
 }
