@@ -10,13 +10,14 @@ import (
 )
 
 func CommandMapB(config models.Config) (models.Config, error) {
+	pokeClient := *pokeapi.NewClient()
 	locationsData := models.LocationsData{}
 
 	if config.Previous == nil {
 		return config, errors.New("no previous page exists")
 	}
 
-	body, err := pokeapi.RequestLocationData(config.Previous)
+	body, err := pokeClient.RequestLocationData(config.Previous)
 	if err != nil {
 		return config, err
 	}

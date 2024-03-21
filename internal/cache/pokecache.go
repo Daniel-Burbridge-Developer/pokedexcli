@@ -10,12 +10,12 @@ type Cache struct {
 	mu           sync.RWMutex
 }
 
-func NewCache(d int) Cache {
+func NewCache(d int) *Cache {
 	c := Cache{
 		CacheEntries: make(map[string]cacheEntry),
 	}
 	c.reapLoop(d)
-	return c
+	return &c
 }
 
 func (c *Cache) Add(key string, val []byte) {

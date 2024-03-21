@@ -1,12 +1,22 @@
 package pokeapi
 
+import (
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+
+	pokecache "github.com/Daniel-Burbridge-Developer/pokedexcli/internal/cache"
+)
+
 type PokeClient struct {
-	pokeCache = pokeCache.NewCache(5)
+	pokeCache pokecache.Cache
 }
 
-func NewClient () PokeClient {
+func NewClient() *PokeClient {
 	pc := PokeClient{}
-	return pc
+	pc.pokeCache = *pokecache.NewCache(5)
+	return &pc
 }
 
 func (pc *PokeClient) RequestLocationData(url any) ([]byte, error) {
@@ -31,4 +41,3 @@ func (pc *PokeClient) RequestLocationData(url any) ([]byte, error) {
 
 	return val, nil
 }
-
