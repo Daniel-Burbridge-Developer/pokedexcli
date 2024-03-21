@@ -1,17 +1,16 @@
 package pokeapi
 
-import (
-	"fmt"
-	"io"
-	"log"
-	"net/http"
+type PokeClient struct {
+	pokeCache = pokeCache.NewCache(5)
+}
 
-	pokecache "github.com/Daniel-Burbridge-Developer/pokedexcli/internal/cache"
-)
+func NewClient () PokeClient {
+	pc := PokeClient{}
+	return pc
+}
 
-func RequestLocationData(url any) ([]byte, error) {
-	cache := pokecache.NewCache(20)
-	val, ok := cache.Get(fmt.Sprint(url))
+func (pc *PokeClient) RequestLocationData(url any) ([]byte, error) {
+	val, ok := pc.pokeCache.Get(fmt.Sprint(url))
 	if !ok {
 		res, err := http.Get(fmt.Sprint(url))
 		if err != nil {
@@ -26,9 +25,10 @@ func RequestLocationData(url any) ([]byte, error) {
 			log.Fatal(err)
 		}
 
-		cache.Add(fmt.Sprint(url), body)
+		pc.pokeCache.Add(fmt.Sprint(url), body)
 		return body, nil
 	}
 
 	return val, nil
 }
+
