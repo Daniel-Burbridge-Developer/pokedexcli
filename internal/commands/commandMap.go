@@ -9,8 +9,7 @@ import (
 	"github.com/Daniel-Burbridge-Developer/pokedexcli/models"
 )
 
-func CommandMap(config models.Config) (models.Config, error) {
-	pokeClient := *pokeapi.NewClient()
+func CommandMap(config models.Config, pokeClient *pokeapi.PokeClient) (models.Config, error) {
 	locationsData := models.LocationsData{}
 
 	if config.Next == nil {

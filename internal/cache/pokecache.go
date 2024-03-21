@@ -1,8 +1,19 @@
 package pokecache
 
 import (
+	"fmt"
 	"sync"
 	"time"
+)
+
+// Got this from GPT to help change colors for console -- not entirely sure what the const () syntax is creating.
+// It's the same as the import syntax, seems just like a way to do bulk variables?
+// loading consts and build time I think
+const (
+	Reset  = "\033[0m"
+	Red    = "\033[31m"
+	Green  = "\033[32m"
+	Yellow = "\033[33m"
 )
 
 type Cache struct {
@@ -10,11 +21,10 @@ type Cache struct {
 	mu           sync.RWMutex
 }
 
-func NewCache(d int) *Cache {
+func NewCache() *Cache {
 	c := Cache{
 		CacheEntries: make(map[string]cacheEntry),
 	}
-	c.reapLoop(d)
 	return &c
 }
 
@@ -34,13 +44,15 @@ func (c *Cache) Get(key string) ([]byte, bool) {
 	return entry.val, true
 }
 
-func (c *Cache) reapLoop(d int) {
+func (c *Cache) ReapLoop(d int) {
+	// fmt.Println(Red, "We be looping", Reset)
+	// fmt.Print("Pokedex > ")
 	ticker := time.NewTicker(time.Duration(d) * time.Second)
 	defer ticker.Stop()
-
 	for range ticker.C {
-		//log.Println("I'm reaping the things", t)
-
+		//log.Println("I'm reaping the things")
+		fmt.Println(Green, "Reaping Cache", Reset)
+		fmt.Print("Pokedex > ")
 		c.mu.Lock()
 		keysToDelete := []string{}
 		for key := range c.CacheEntries {

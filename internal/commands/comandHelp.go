@@ -3,10 +3,11 @@ package commands
 import (
 	"fmt"
 
+	"github.com/Daniel-Burbridge-Developer/pokedexcli/internal/pokeapi"
 	"github.com/Daniel-Burbridge-Developer/pokedexcli/models"
 )
 
-func CommandHelp(config models.Config) (models.Config, error) {
+func CommandHelp(config models.Config, pokeClient *pokeapi.PokeClient) (models.Config, error) {
 	fmt.Println("")
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
