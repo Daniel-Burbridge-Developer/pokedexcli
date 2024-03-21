@@ -37,7 +37,7 @@ func (pc *PokeClient) RequestLocationData(url any) ([]byte, error) {
 	// fmt.Println(Red, "Checking if in Cache", Reset)
 	val, ok := pc.pokeCache.Get(fmt.Sprint(url))
 	if !ok {
-		fmt.Println(Yellow, "MISSING FROM CACHE", Reset)
+		fmt.Println(Yellow, "MISSING FROM LOWCATION DATA CACHE", Reset)
 		res, err := http.Get(fmt.Sprint(url))
 		if err != nil {
 			log.Fatal(err)
@@ -56,6 +56,14 @@ func (pc *PokeClient) RequestLocationData(url any) ([]byte, error) {
 		return body, nil
 	}
 
-	fmt.Println(Magenta, "FOUND IN CACHE", Reset)
+	fmt.Println(Magenta, "FOUND IN LOCATION DATA CACHE", Reset)
 	return val, nil
+}
+
+func (pc *PokeClient) ExploreLocation(url any) ([]byte, error) {
+	fmt.Println("EXPLORING THE LOCATION")
+
+	// Just here so my program doesn't error on compile prior to feat implemention
+	bytes := make([]byte, 5)
+	return bytes, nil
 }

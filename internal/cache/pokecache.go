@@ -51,7 +51,7 @@ func (c *Cache) ReapLoop(d int) {
 	defer ticker.Stop()
 	for range ticker.C {
 		//log.Println("I'm reaping the things")
-		fmt.Println(Green, "Reaping Cache", Reset)
+		fmt.Println(Green, "Reaping Location Data Cache", Reset)
 		fmt.Print("Pokedex > ")
 		c.mu.Lock()
 		keysToDelete := []string{}
