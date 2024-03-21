@@ -9,7 +9,11 @@ import (
 	"github.com/Daniel-Burbridge-Developer/pokedexcli/models"
 )
 
-func CommandMap(config models.Config, pokeClient *pokeapi.PokeClient) (models.Config, error) {
+func CommandMap(config models.Config, pokeClient *pokeapi.PokeClient, location *string) (models.Config, error) {
+	if location != nil {
+		return config, errors.New("this command does not support a location")
+	}
+
 	locationsData := models.LocationsData{}
 
 	if config.Next == nil {

@@ -29,17 +29,29 @@ func CliCommandBuilder() map[string]models.CliCommand {
 			Description: "Scrolls backwards through pokemon locations 20 at a time or displays an error if no previous locations",
 			Callback:    CommandMapB,
 		},
+
+		"explore": {
+			Name:        "explore",
+			Description: "Returns a list of all Pokemon that can be found in a location",
+			Callback:    CommandExplore,
+		},
 	}
 
 }
 
-func CliCommandDistributer(command string) (models.CliCommand, error) {
+func CliCommandDistributer(command string) (models.CliCommand, *string, error) {
 	commands := CliCommandBuilder()
+	text := strings.Split(command, " ")
+	command = text[0]
 	value, exists := commands[command]
 	if exists {
-		return value, nil
+		if len(text) > 1 {
+			location := text[1]
+			return value, &location, nil
+		}
+		return value, nil, nil
 	} else {
-		return models.CliCommand{Name: "", Description: "", Callback: nil}, errors.New("command not found")
+		return models.CliCommand{Name: "", Description: "", Callback: nil}, nil, errors.New("command not found")
 	}
 }
 
