@@ -39,14 +39,18 @@ func (pc *PokeClient) RequestLocationData(url any) ([]byte, error) {
 	if !ok {
 		fmt.Println(Yellow, "MISSING FROM LOWCATION DATA CACHE", Reset)
 		res, err := http.Get(fmt.Sprint(url))
+
 		if err != nil {
 			log.Fatal(err)
 		}
+
 		body, err := io.ReadAll(res.Body)
 		res.Body.Close()
+
 		if res.StatusCode > 299 {
 			log.Fatalf("response failed with status code: %d\nbody: %s\n", res.StatusCode, body)
 		}
+
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -61,9 +65,35 @@ func (pc *PokeClient) RequestLocationData(url any) ([]byte, error) {
 }
 
 func (pc *PokeClient) ExploreLocation(url any) ([]byte, error) {
+
+	// what on earth is this returning
+	// learn to do get request in browser to validate the api is being weird not my code
+	// it's probably my code
+
 	fmt.Println("EXPLORING THE LOCATION")
 
-	// Just here so my program doesn't error on compile prior to feat implemention
-	bytes := make([]byte, 5)
-	return bytes, nil
+	// Check if in cache
+
+	fmt.Println(Yellow, "MISSING FROM EXPLORE CACHE", Reset)
+	res, err := http.Get(fmt.Sprint(url))
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	body, err := io.ReadAll(res.Body)
+	res.Body.Close()
+
+	if res.StatusCode > 299 {
+		log.Fatalf("response failed with status code: %d\nbody: %s\n", res.StatusCode, body)
+	}
+
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Add to cache
+
+	fmt.Println(res)
+	return body, nil
 }

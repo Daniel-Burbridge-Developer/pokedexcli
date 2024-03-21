@@ -13,6 +13,14 @@ func CommandExplore(config models.Config, pokeClient *pokeapi.PokeClient, locati
 		return config, errors.New("this command requires a location")
 	}
 
-	fmt.Println("Nothing broken yet!")
+	url := fmt.Sprint("https://pokeapi.co/api/v2/location-area/", *location)
+
+	body, err := pokeClient.ExploreLocation(url)
+	if err != nil {
+		return config, err
+	}
+
+	fmt.Println(body)
+
 	return config, nil
 }
