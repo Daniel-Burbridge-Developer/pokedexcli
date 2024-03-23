@@ -46,9 +46,9 @@ func CommandCatch(config models.Config, pokeClient *pokeapi.PokeClient, pokemon 
 
 	if throwStrength > catchThresholdToBeat {
 		fmt.Printf("%s was caught!\n", pokemonData.Name)
-		_, ok := pokeClient.PokeDex.Get(url)
+		_, ok := pokeClient.PokeDex.Get(pokemonData.Name)
 		if !ok {
-			pokeClient.PokeDex.Add(url, pokemonData)
+			pokeClient.PokeDex.Add(pokemonData.Name, pokemonData)
 		}
 	} else {
 		fmt.Printf("%s escaped!\n", pokemonData.Name)
