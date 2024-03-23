@@ -25,6 +25,7 @@ func CommandExplore(config models.Config, pokeClient *pokeapi.PokeClient, locati
 		return config, err
 	}
 
+	// I think this is actually an error, since the data I'm getting back could be the direct link? But it's working
 	json.Unmarshal(body, &exploredLocationsData)
 
 	fmt.Println("Found Pokemon:")
