@@ -1,6 +1,7 @@
 package commands
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 
@@ -13,6 +14,10 @@ func CommandExplore(config models.Config, pokeClient *pokeapi.PokeClient, locati
 		return config, errors.New("this command requires a location")
 	}
 
+	fmt.Printf("Exploring %s...\n", *location)
+
+	exploredLocationsData := models.ExploredLocationData{}
+
 	url := fmt.Sprint("https://pokeapi.co/api/v2/location-area/", *location)
 
 	body, err := pokeClient.ExploreLocation(url)
@@ -20,7 +25,12 @@ func CommandExplore(config models.Config, pokeClient *pokeapi.PokeClient, locati
 		return config, err
 	}
 
-	fmt.Println(body)
+	json.Unmarshal(body, &exploredLocationsData)
+
+	fmt.Println("Found Pokemon:")
+	for _, result := range exploredLocationsData.PokemonEncounters {
+		fmt.Printf(" - %s\n", result.Pokemon.Name)
+	}
 
 	return config, nil
 }

@@ -37,7 +37,7 @@ func (pc *PokeClient) RequestLocationData(url any) ([]byte, error) {
 	// fmt.Println(Red, "Checking if in Cache", Reset)
 	val, ok := pc.pokeCache.Get(fmt.Sprint(url))
 	if !ok {
-		fmt.Println(Yellow, "MISSING FROM LOWCATION DATA CACHE", Reset)
+		fmt.Println(Yellow, "MISSING FROM CACHE", Reset)
 		res, err := http.Get(fmt.Sprint(url))
 
 		if err != nil {
@@ -57,43 +57,46 @@ func (pc *PokeClient) RequestLocationData(url any) ([]byte, error) {
 		// fmt.Println(Red, "Adding it to the cache!", Reset)
 		pc.pokeCache.Add(fmt.Sprint(url), body)
 		// fmt.Println(Red, "Added to the cache, time to send it back!", Reset)
+		// fmt.Println(body)
 		return body, nil
 	}
 
-	fmt.Println(Magenta, "FOUND IN LOCATION DATA CACHE", Reset)
+	fmt.Println(Magenta, "FOUND IN CACHE", Reset)
 	return val, nil
 }
 
 func (pc *PokeClient) ExploreLocation(url any) ([]byte, error) {
 
-	// what on earth is this returning
-	// learn to do get request in browser to validate the api is being weird not my code
-	// it's probably my code
-
-	fmt.Println("EXPLORING THE LOCATION")
+	// fmt.Println(Red, "EXPLORING THE LOCATION", Reset)
 
 	// Check if in cache
+	val, ok := pc.pokeCache.Get(fmt.Sprint(url))
 
-	fmt.Println(Yellow, "MISSING FROM EXPLORE CACHE", Reset)
-	res, err := http.Get(fmt.Sprint(url))
+	if !ok {
+		fmt.Println(Yellow, "MISSING FROM CACHE", Reset)
+		res, err := http.Get(fmt.Sprint(url))
 
-	if err != nil {
-		log.Fatal(err)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		body, err := io.ReadAll(res.Body)
+		res.Body.Close()
+
+		if res.StatusCode > 299 {
+			log.Fatalf("response failed with status code: %d\nbody: %s\n", res.StatusCode, body)
+		}
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		pc.pokeCache.Add(fmt.Sprint(url), body)
+
+		return body, nil
 	}
 
-	body, err := io.ReadAll(res.Body)
-	res.Body.Close()
+	fmt.Println(Magenta, "FOUND IN CACHE", Reset)
+	return val, nil
 
-	if res.StatusCode > 299 {
-		log.Fatalf("response failed with status code: %d\nbody: %s\n", res.StatusCode, body)
-	}
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	// Add to cache
-
-	fmt.Println(res)
-	return body, nil
 }
