@@ -46,8 +46,8 @@ func CliCommandDistributer(command string) (models.CliCommand, *string, error) {
 	value, exists := commands[command]
 	if exists {
 		if len(text) > 1 {
-			location := text[1]
-			return value, &location, nil
+			option := text[1]
+			return value, &option, nil
 		}
 		return value, nil, nil
 	} else {
