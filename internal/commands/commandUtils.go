@@ -35,6 +35,12 @@ func CliCommandBuilder() map[string]models.CliCommand {
 			Description: "Returns a list of all Pokemon that can be found in a location",
 			Callback:    CommandExplore,
 		},
+
+		"catch": {
+			Name:        "catch",
+			Description: "Attempts to catch a pokemon",
+			Callback:    CommandCatch,
+		},
 	}
 
 }
