@@ -31,7 +31,7 @@ func CommandCatch(config models.Config, pokeClient *pokeapi.PokeClient, pokemon 
 	json.Unmarshal(body, &pokemonData)
 
 	baseXP := pokemonData.BaseExperience
-	chanceToCatch := 100 - (baseXP * 2 / 10)
+	chanceToCatch := 100 - (baseXP * 3 / 10)
 	if chanceToCatch < 20 {
 		chanceToCatch = 20
 	}
@@ -49,6 +49,7 @@ func CommandCatch(config models.Config, pokeClient *pokeapi.PokeClient, pokemon 
 		_, ok := pokeClient.PokeDex.Get(pokemonData.Name)
 		if !ok {
 			pokeClient.PokeDex.Add(pokemonData.Name, pokemonData)
+			fmt.Println("You may now inspect it with the inspect command.")
 		}
 	} else {
 		fmt.Printf("%s escaped!\n", pokemonData.Name)

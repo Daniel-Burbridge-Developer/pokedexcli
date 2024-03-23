@@ -47,6 +47,12 @@ func CliCommandBuilder() map[string]models.CliCommand {
 			Description: "Get details of a pokemon you have in your pokedex",
 			Callback:    CommandInspect,
 		},
+
+		"pokedex": {
+			Name:        "pokedex",
+			Description: "Lists all of your caught pokemon",
+			Callback:    CommandPokedex,
+		},
 	}
 
 }
